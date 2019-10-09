@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+//import logo from "./logo.svg";
+import "./App.css";
+import { SendMail } from "./SendMail";
 
-const App: React.FC = () => {
+import { toast } from "react-toastify";
+
+function App() {
+  const [mail, setMail] = useState("");
+  const [mailSent, setMailSent] = useState(false);
+  function onClickBtn(event) {
+    event.preventDefault();
+    SendMail(mail);
+    setMailSent(true);
+  }
+  function handleChange(event) {
+    setMail(event.target.value);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Skriv mail</h1>
+      <label htmlFor="mailLabel">
+        <strong>Mail: </strong>
+      </label>
+      <input id="mailLabel" onChange={handleChange}></input>
+      <button className="btn btn-primary" onClick={onClickBtn}>
+        Få koselig melding!
+      </button>
+      {mailSent
+        ? toast.success("Koselig Melding sendt :P!! (Evt Sjekk spam)") &&
+          setMailSent(false)
+        : ""}
+
+      <div></div>
     </div>
   );
 }
